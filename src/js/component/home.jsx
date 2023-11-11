@@ -25,7 +25,7 @@ const Home = () => {
 
   return (
     <div className="container containerEstilo">
-      <h1>To Do List</h1>
+      <h1>To-Do-List</h1>
       <input
         type="text"
         placeholder="¿Qué se debe hacer?"
@@ -42,9 +42,9 @@ const Home = () => {
             onMouseLeave={() => setIndiceHover(null)}
             className="todo-item elementoDeTarea"
           >
-            {tarea}
+            <span className="textoTarea">{tarea}</span>
             {indiceHover === i && (
-              <button onClick={() => eliminarTarea(i)} className="btn btn-secondary">x</button>
+              <button onClick={() => eliminarTarea(i)} className="btnEliminar">Eliminar</button>
             )}
           </li>
         ))}
