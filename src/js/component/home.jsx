@@ -1,26 +1,59 @@
-import React from "react";
+import React, { useState } from "react";
 
-//include images into your bundle
-import rigoImage from "../../img/rigo-baby.jpg";
-
-//create your first component
 const Home = () => {
-	return (
-		<div className="text-center">
-			<h1 className="text-center mt-5">Hello Rigo!</h1>
-			<p>
-				<img src={rigoImage} />
-			</p>
-			<a href="#" className="btn btn-success">
-				If you see this green button... bootstrap is working...
-			</a>
-			<p>
-				Made by{" "}
-				<a href="http://www.4geeksacademy.com">4Geeks Academy</a>, with
-				love!
-			</p>
-		</div>
-	);
+  const [entradaTarea, setEntradaTarea] = useState('');
+  const [nuevasTareas, setNuevasTareas] = useState([]);
+  const [indiceHover, setIndiceHover] = useState(null);
+
+  const manejarEntradaTarea = (e) => {
+    setEntradaTarea(e.target.value);
+  };
+
+  const manejarTeclaEnter = (e) => {
+    if (e.key === "Enter") {
+      setNuevasTareas(nuevasTareas.concat([entradaTarea]));
+      setEntradaTarea("");
+    }
+  };
+
+  const eliminarTarea = (id) => {
+    let eliminadas = nuevasTareas.filter((tarea, index) => {
+      return index !== id;
+    });
+    setNuevasTareas(eliminadas);
+  };
+
+  return (
+    <div className="container containerEstilo">
+      <h1>To Do List</h1>
+      <input
+        type="text"
+        placeholder="¿Qué se debe hacer?"
+        onChange={manejarEntradaTarea}
+        value={entradaTarea}
+        onKeyDown={manejarTeclaEnter}
+        className="form-control entradaFormulario"
+      />
+      <ul className="todo-list listaDeTareas">
+        {nuevasTareas.map((tarea, i) => (
+          <li
+            key={i}
+            onMouseEnter={() => setIndiceHover(i)}
+            onMouseLeave={() => setIndiceHover(null)}
+            className="todo-item elementoDeTarea"
+          >
+            {tarea}
+            {indiceHover === i && (
+              <button onClick={() => eliminarTarea(i)} className="btn btn-secondary">x</button>
+            )}
+          </li>
+        ))}
+      </ul>
+      <div> {nuevasTareas.length} Items Pendientes</div>
+    </div>
+  );
 };
 
 export default Home;
+
+
